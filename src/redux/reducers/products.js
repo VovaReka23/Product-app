@@ -92,7 +92,8 @@ const initialState = {
 		{
 			id: 3,
 			productId: 1,
-			description: 'some text here',
+			auther: "Andriy",
+			description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
 			date: '14:00 22.08.2021'
 		}
 	]
@@ -162,13 +163,33 @@ const products = (state = initialState, action) => {
 				pinItemId: action.payload,
 			};
 		}
-
+		case 'SET_COMMENT': {
+			action.payload.forEach((com) => {
+				state.items.forEach((item) => {
+					if (item.id === com.productId) {
+						item.comments = [com];
+					}
+				})
+			})
+			state.items.forEach((item) => {
+				if (item.id === action.payload.id) {
+					item.comments = action.payload.comments;
+				}
+			})
+			return {
+				...state,
+				pinItemId: action.payload,
+			};
+		}
 
 		default:
 			return state;
 	}
 };
-
+export const getComments  = (state = initialState) => {
+	const { comment } = state;
+	return comment;
+}
 export const productsListSelector = (state) => {
 	const { search, items, pinItemId, sortBy } = state;
 

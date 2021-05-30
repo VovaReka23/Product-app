@@ -26,6 +26,10 @@ export const setPinProduct = (id) => ({
 	type: 'SET_PIN_PRODUCT',
 	payload: id,
 });
+export const setComment = (comments) => ({
+	type: 'SET_COMMENT',
+	payload: comments,
+});
 
 
 

@@ -16,7 +16,7 @@ const ProductList = () => {
 	const products = useSelector(({ products }) => productsListSelector(products));
 	const [visiblePopup, setVisiblePopup] = React.useState(false);
 	const search = useSelector((state) => state.products.search);
-
+	
 	const toggleVisiblePopup = () => {
 		setVisiblePopup(!visiblePopup);
 	};

@@ -1,9 +1,9 @@
 import React from 'react';
 import { AddEditCartProduct } from '../components';
-import {useParams} from "react-router-dom"
+import {useParams, } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	editProducts,
+	editProducts
 } from '../redux/actions/product';
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,8 @@ const ProductDetails = () => {
 	const {productId} = useParams()
 	const thisProduct = items.find(prod => prod.id === +productId) || 2
 	const dispatch = useDispatch();
+	
+	
 	const [visiblePopup, setVisiblePopup] = React.useState(false);
 	const toggleVisiblePopup = () => {
 		setVisiblePopup(!visiblePopup);
@@ -38,6 +40,32 @@ const ProductDetails = () => {
 				{thisProduct.size && thisProduct.size.height ? <p className='product__details-height'><span>height: </span>{thisProduct.size.height}</p> : ''}
 				{thisProduct && thisProduct.weight ? <p className='product__details-height'><span>weight: </span>{thisProduct.weight}</p> : ''}
 			</div>
+			{thisProduct.comments && (
+				<ul className="product__details-comments">
+					<h2 className='title'>Comments</h2>
+					{thisProduct.comments.map((comment) => (
+						<li className="comment" key={comment.id}> 
+							<span className="comment__author" >{comment.auther}</span>
+							<span className="comment__description" >{comment.description}</span>
+							<span className="comment__date" >{comment.date}</span>
+						</li>
+					))}
+				</ul>
+			)}
+			<div className="product__details-add-coment">
+				<input
+						value=''
+						className='comment__author'
+						name="name"
+						type="text"
+						placeholder="name"
+						required
+					/>
+				<textarea className="comment__description" name="text"></textarea>
+				<button type='submit' className="btn product__add-field-button">
+				Add Comment</button>
+			</div>
+			
 		</div>
 	);
 };
