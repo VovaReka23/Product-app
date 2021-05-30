@@ -278,6 +278,7 @@ h1 {
 .comment {
 	display: flex;
 	flex-wrap: wrap;
+	margin-bottom: 20px;
 	&__author {
 		text-align: center;
 		&:before {

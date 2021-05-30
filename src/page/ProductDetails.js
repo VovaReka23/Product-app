@@ -54,7 +54,6 @@ const ProductDetails = () => {
 			)}
 			<div className="product__details-add-coment">
 				<input
-						value=''
 						className='comment__author'
 						name="name"
 						type="text"
