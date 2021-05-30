@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const ProductDetails = () => {
 	const items = useSelector(({ products }) => products.items);
 	const {productId} = useParams()
-	const thisProduct = items.find(prod => prod.id === +productId)
+	const thisProduct = items.find(prod => prod.id === +productId) || 2
 	const dispatch = useDispatch();
 	const [visiblePopup, setVisiblePopup] = React.useState(false);
 	const toggleVisiblePopup = () => {
@@ -21,7 +21,7 @@ const ProductDetails = () => {
 	};
 	return (
 		<div className="product__details">
-			<Link className="product__details-nav" to={`/`}>Back to products</Link>
+			<Link className="product__details-nav" to={`/Product-app`}>Back to products</Link>
 			{visiblePopup && (
 				<AddEditCartProduct onClick={toggleVisiblePopup} onEditProduct={onEditProduct} defValue={thisProduct} />
 			)}
@@ -30,13 +30,13 @@ const ProductDetails = () => {
 				{thisProduct.imageUrl ? <img src={thisProduct.imageUrl} alt="product"/>  : ''}
 			</div>
 			<div className="product__details-info">
-				{thisProduct.name ? <h2 className='product__details-name'>{thisProduct.name}</h2> : ''}
-				{thisProduct.description ? <p className='product__details-description'>{thisProduct.description}</p> : ''}
-				{thisProduct.price ? <span className='product__details-price'>{thisProduct.price}$</span> : ''}
-				{thisProduct.count ? <p className='product__details-count'><span>count: </span>{thisProduct.count}</p> : ''}
-				{thisProduct.size.width ? <p className='product__details-width'><span>width: </span>{thisProduct.size.width}</p> : ''}
-				{thisProduct.size.height ? <p className='product__details-height'><span>height: </span>{thisProduct.size.height}</p> : ''}
-				{thisProduct.weight ? <p className='product__details-height'><span>weight: </span>{thisProduct.weight}</p> : ''}
+				{thisProduct && thisProduct.name ? <h2 className='product__details-name'>{thisProduct.name}</h2> : ''}
+				{thisProduct && thisProduct.description ? <p className='product__details-description'>{thisProduct.description}</p> : ''}
+				{thisProduct && thisProduct.price ? <span className='product__details-price'>{thisProduct.price}$</span> : ''}
+				{thisProduct && thisProduct.count ? <p className='product__details-count'><span>count: </span>{thisProduct.count}</p> : ''}
+				{thisProduct.size && thisProduct.size.width ? <p className='product__details-width'><span>width: </span>{thisProduct.size.width}</p> : ''}
+				{thisProduct.size && thisProduct.size.height ? <p className='product__details-height'><span>height: </span>{thisProduct.size.height}</p> : ''}
+				{thisProduct && thisProduct.weight ? <p className='product__details-height'><span>weight: </span>{thisProduct.weight}</p> : ''}
 			</div>
 		</div>
 	);

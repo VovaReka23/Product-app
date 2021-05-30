@@ -17,4 +17,15 @@ export const sortProduct = (sort) => ({
 	payload: sort
 });
 
+export const searchProducts = (search) => ({
+	type: 'SEARCH_PRODUCTS',
+	payload: search,
+});
+
+export const setPinProduct = (id) => ({
+	type: 'SET_PIN_PRODUCT',
+	payload: id,
+});
+
+
 

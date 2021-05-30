@@ -5,7 +5,9 @@ import { productsListSelector } from '../redux/reducers/products';
 import {
 	addProducts,
 	removeProduct,
-	sortProduct
+	sortProduct,
+	searchProducts,
+	setPinProduct
 } from '../redux/actions/product';
 
 
@@ -13,6 +15,8 @@ const ProductList = () => {
 	const dispatch = useDispatch();
 	const products = useSelector(({ products }) => productsListSelector(products));
 	const [visiblePopup, setVisiblePopup] = React.useState(false);
+	const search = useSelector((state) => state.products.search);
+
 	const toggleVisiblePopup = () => {
 		setVisiblePopup(!visiblePopup);
 	};
@@ -23,6 +27,14 @@ const ProductList = () => {
 		dispatch(sortProduct('count'));
 	};
 
+	const onSearchProduct = (event) => {
+		const { value } = event.target;
+		dispatch(searchProducts(value));
+	};
+
+	const onPinProduct = (id) => {
+		dispatch(setPinProduct(id));
+	};
 	const onAddProduct = (imageUrl, name, description, price, count, weight, width, height) => {
 		dispatch(addProducts(imageUrl, name, description, price, count, weight, width, height));
 	};
@@ -32,6 +44,9 @@ const ProductList = () => {
 			{visiblePopup && (
 				<AddCartProduct onClick={toggleVisiblePopup} onAddProduct={onAddProduct} />
 			)}
+			<div className="product__search">
+				<input onChange={onSearchProduct} value={search} type="text" placeholder="Search" />
+			</div>
 			<button className='btn-add' onClick={toggleVisiblePopup}> Add New Product</button>
 			<button className='btn-add' onClick={onSortProduct}> Sort By Count</button>
 			<div className="product__list">
@@ -40,6 +55,7 @@ const ProductList = () => {
 						key={`${product.name}-id-${product.id}`}
 						{...product}
 						onRemoveProduct={() => onRemoveProduct(product.id)}
+						onPinProduct={() => onPinProduct(product.id)}
 					/>
 				))}
 			</div>

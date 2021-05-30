@@ -1,4 +1,6 @@
 const initialState = {
+	search: '',
+	pinItemId: null,
 	sortBy: 'price',
 	items: [
 		{
@@ -91,6 +93,19 @@ const products = (state = initialState, action) => {
 				sortBy: action.payload
 			};
 		}
+		case 'SEARCH_PRODUCTS': {
+			return {
+				...state,
+				search: action.payload,
+			};
+		}
+
+		case 'SET_PIN_PRODUCT': {
+			return {
+				...state,
+				pinItemId: action.payload,
+			};
+		}
 
 
 		default:
@@ -99,11 +114,26 @@ const products = (state = initialState, action) => {
 };
 
 export const productsListSelector = (state) => {
-	const { items, sortBy } = state;
-	 	let a = items.sort(function(a, b) {
-		return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
-	})
-	return a;
+	const { search, items, pinItemId, sortBy } = state;
+
+	const searchLower = search.toLowerCase();
+
+	return items
+		.filter((item) => {
+			const nameLower = item.name.toLowerCase();
+
+			return nameLower.indexOf(searchLower) !== -1;
+		})
+		.sort(function(a, b) {
+			return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
+		}).sort((itemA) => {
+			if (itemA.id === pinItemId) {
+				return -1;
+			}
+
+			return 0;
+		});
+
 }
 
 export default products;
